@@ -4,6 +4,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import HomePage from './components/Home/HomePage';
 import Query from './components/Query/Query';
+import ErrorPage from './components/ErrorPage/ErrorPage';
 import './App.css';
 
 function App() {
@@ -21,12 +22,12 @@ function App() {
         console.log(res);
       })
       .then(res => {
-        navToPage();
-      }).catch(err => console.error(err));
-  }
-
-  const navToPage = () => {
-    navigate(`/${query}/${id}`);
+        navigate(`/${query}/${id}`);
+      })
+      .catch(err => {
+        navigate(`/error`);
+        console.error(err);
+      });
   }
 
   return (
@@ -55,6 +56,7 @@ function App() {
         </div>
       </form>
       <Router>
+          <ErrorPage path="/error"/>
           <HomePage path="/home" />
           <Query 
             item={item}
